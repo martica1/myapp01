@@ -1,0 +1,22 @@
+{
+  "name": "myapp01",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martica1/myapp01.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martica1/myapp01/issues"
+  },
+  "homepage": "https://github.com/martica1/myapp01#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
