@@ -17,6 +17,7 @@ db.on("error", function(err){
   console.log("DB Error : ", err);
 });
 
+/*
 var dataSchema = mongoose.Schema({
   name:String,
   count:Number
@@ -32,6 +33,7 @@ Data.findOne({name:"myData"}, function(err, data){
     });
   }
 });
+*/
 
 /*
 app.get('/', function(req,res){
@@ -48,7 +50,52 @@ app.use(express.static(path.join(__dirname, 'public')));
 console.log(__dirname);
 app.use(bodyParser.json());
 
+var postSchema = mongoose.Schema({
+  title: {type:String, required:true},
+  body: {type:String, required:true},
+  createdAt: {type:Date, defalut:Date.now},
+  updatedAt: Date
+});
+
+var Post = mongoose.model('post', postSchema);
+
+app.get('/posts', function(req, res){
+  Post.find({}, function(err, posts){
+    if(err) return res.json({success:false, message:err});
+    res.json({success:true, data:posts});
+  });
+});
+
+app.post('/posts', function(req, res){
+  Post.create(req.body.post, function(err, post){
+    if(err) return res.json({success:false, message:err});
+    res.json({success:true, data:post});
+  });
+});
+
+app.get('/posts/:id', function(req, res){
+  Post.findById(req.params.id, function(err, post){
+    if(err) return res.json({success:false, message:err});
+    res.json({success:true, data:post});
+  });
+});
+
+app.put('/posts/:id', function(req, res){
+  Post.findByIdAndUpdate(req.params.id, req.body.post, function(err, post){
+    if(err) return res.json({success:false, message:err});
+    res.json({success:true, message:post._id+" Updated!!"});
+  });
+});
+
+app.delete('/posts/:id', function(req, res){
+  Post.findByIdAndRemove(req.params.id, function(err, post){
+    if(err) return res.json({success:false, message:err});
+    res.json({success:true, message:post._id+" Deleted!!"});
+  });
+});
+
 //var data={count:0};
+/*
 app.get('/', function(req,res){
   Data.findOne({name:"myData"}, function(err, data){
     if(err) return console.log("Data Error :", err);
@@ -58,38 +105,38 @@ app.get('/', function(req,res){
       res.render('first_ejs', data);
     });
   });
-  /*
-  data.count++;
-  res.render('first_ejs',data);
-  */
+
+  //data.count++;
+  //res.render('first_ejs',data);
+
 
 });
 
 app.get('/reset', function(req,res){
   setCounter(res, 0);
-  /*
-  data.count=0;
-  res.render('first_ejs',data);
-  */
+
+  //data.count=0;
+  //res.render('first_ejs',data);
+
 });
 
 app.get('/set/count', function(req,res){
   if(req.query.count) setCounter(res, req.query.count);
   else getCounter(res);
-  /*
-  if(req.query.count) data.count=req.query.count;
-  res.render('first_ejs',data);
-  */
+
+  //if(req.query.count) data.count=req.query.count;
+  //res.render('first_ejs',data);
+
 });
 
 app.get('/set/:num', function(req,res){
 
   if(req.params.num) setCounter(res,req.params.num);
   else getCounter(res);
-  /*
-  data.count=req.params.num;
-  res.render('first_ejs',data);
-  */
+
+  //data.count=req.params.num;
+  //res.render('first_ejs',data);
+
 });
 
 function setCounter(res, num){
@@ -113,6 +160,7 @@ function getCounter(res) {
     res.render('first_ejs', data);
   });
 }
+*/
 
 /*
 app.get('/', function(req,res){
